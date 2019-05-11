@@ -19,6 +19,11 @@ BREWFILE="${HOME}/.Brewfile"
 
 ## Main ----------------------------------------------------------------------
 
+if [ ! -w /usr/local/lib/pkgconfig ]; then
+  echo "/usr/local/lib/pkgconfig not writtable, run: sudo chown $USER /usr/local/lib/pkgconfig"
+  exit 1
+fi
+
 # Check for Homebrew and install if we don't have it
 if test ! "$(command -v brew)"; then
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -41,6 +46,7 @@ echo "Checking for custom Brewfile at .Brewfile.local"
 if [ -f "${HOME}/.Brewfile.local" ]; then
   BREWFILE="$HOME/.Brewfile.local"
 fi
+
 
 # Install User Packages
 echo "Install Packages from ${BREWFILE}..."
